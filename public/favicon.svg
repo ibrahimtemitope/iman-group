@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="igGold" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F6EBD0" />
+      <stop offset="45%" stop-color="#CFA657" />
+      <stop offset="100%" stop-color="#8A6423" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#070A10" />
+  <rect x="3" y="3" width="58" height="58" rx="11" stroke="url(#igGold)" stroke-opacity="0.45" stroke-width="1.2" />
+  <!-- Rub el Hizb 8-pointed Sovereign Crest -->
+  <rect x="18" y="18" width="28" height="28" stroke="url(#igGold)" stroke-width="2" />
+  <rect x="18" y="18" width="28" height="28" transform="rotate(45 32 32)" stroke="url(#igGold)" stroke-width="2" />
+  <circle cx="32" cy="32" r="5.5" stroke="url(#igGold)" stroke-width="1.8" fill="#070A10" />
+  <circle cx="32" cy="32" r="2" fill="#F6EBD0" />
+</svg>

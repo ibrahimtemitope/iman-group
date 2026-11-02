@@ -1,0 +1,76 @@
+import React from 'react';
+import { Scale, Shield, Lock } from 'lucide-react';
+import { GOVERNANCE_CHARTER } from '../data/mandateData';
+import { GovernanceVault3D } from './GovernanceVault3D';
+
+export const GovernanceCharterSection: React.FC = () => {
+  const icons = [Scale, Shield, Lock];
+
+  return (
+    <section
+      id="governance"
+      className="relative overflow-hidden border-t border-gold-400/25 bg-obsidian-950 bg-sovereign-grid py-20 sm:py-28"
+    >
+      <div className="mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-12">
+          {/* Left: Live 3D Brushed-Gold AAOIFI Sovereign Sculpture */}
+          <div className="order-2 lg:order-1 lg:col-span-5">
+            <div className="rounded-[2.25rem] glass-obsidian p-6 sm:p-8">
+              <GovernanceVault3D />
+              <p className="mt-4 text-center text-[13px] leading-relaxed text-ivory-200/70">
+                Operating as a value-driven family office and holding entity, Iman Global enforces
+                rigorous corporate governance and non-speculative capital stewardship.
+              </p>
+            </div>
+          </div>
+
+          {/* Right: 3 Governance Charter Pillars */}
+          <div className="order-1 lg:order-2 lg:col-span-7">
+            <p className="font-mono text-[11.5px] font-semibold tracking-[0.2em] text-gold-300 uppercase">
+              [ 03 // Governance &amp; Shariah Compliance ]
+            </p>
+
+            <h2 className="mt-3 font-serif text-4xl font-semibold leading-[1.1] text-ivory-50 sm:text-5xl">
+              Institutional Governance &amp;{' '}
+              <span className="text-gold-metallic italic">AAOIFI Alignment</span>
+            </h2>
+
+            <p className="mt-4 max-w-2xl text-[16px] leading-[1.75] text-ivory-200/82">
+              Operating as a value-driven family office and holding entity, Iman Global enforces
+              rigorous corporate governance standards:
+            </p>
+
+            <div className="mt-8 space-y-4">
+              {GOVERNANCE_CHARTER.map((item, idx) => {
+                const Icon = icons[idx] || Scale;
+                return (
+                  <article
+                    key={item.code}
+                    className="glass-obsidian glass-obsidian-hover rounded-2xl p-6 sm:p-7"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold-300/35 bg-obsidian-950 text-gold-300">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <span className="font-mono text-[10.5px] font-semibold tracking-[0.2em] text-gold-300 uppercase">
+                          {item.code}
+                        </span>
+                        <h3 className="mt-1 font-serif text-2xl font-semibold text-ivory-50">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-[15px] leading-[1.7] text-ivory-200/80">
+                          {item.body}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
