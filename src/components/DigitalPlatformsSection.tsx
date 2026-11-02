@@ -2,11 +2,17 @@ import React from 'react';
 import { Compass, Globe2, ShoppingBag } from 'lucide-react';
 import { DIGITAL_DIVISIONS } from '../data/mandateData';
 
-export const DigitalPlatformsSection: React.FC = () => {
+interface Props {
+  isLight?: boolean;
+}
+
+export const DigitalPlatformsSection: React.FC<Props> = ({ isLight = false }) => {
   return (
     <section
       id="platforms"
-      className="relative border-t border-gold-500/30 bg-ivory-100 bg-ivory-grid py-20 text-obsidian-900 sm:py-28"
+      className={`relative border-t border-gold-500/30 bg-ivory-grid py-20 text-obsidian-900 sm:py-28 ${
+        isLight ? 'bg-ivory-50' : 'bg-ivory-100'
+      }`}
     >
       <div className="mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">

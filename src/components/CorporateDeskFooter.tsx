@@ -3,12 +3,14 @@ import { Check, Copy, Mail, Send, X } from 'lucide-react';
 import { SovereignCrest } from './SovereignHeader';
 
 interface Props {
+  isLight: boolean;
   deskOpen: boolean;
   onCloseDesk: () => void;
   onOpenDesk: () => void;
 }
 
 export const CorporateDeskFooter: React.FC<Props> = ({
+  isLight,
   deskOpen,
   onCloseDesk,
   onOpenDesk,
@@ -39,19 +41,48 @@ export const CorporateDeskFooter: React.FC<Props> = ({
 
   return (
     <>
-      <footer className="border-t border-gold-400/25 bg-obsidian-950 text-ivory-100">
+      <footer
+        className={`border-t transition-colors duration-300 ${
+          isLight
+            ? 'border-gold-500/30 bg-ivory-200/65 text-obsidian-950'
+            : 'border-gold-400/25 bg-obsidian-950 text-ivory-100'
+        }`}
+      >
         {/* Executive Corporate Desk Banner */}
         <div className="mx-auto max-w-[1340px] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-          <div className="rounded-[2.25rem] glass-obsidian p-8 sm:p-12">
+          <div
+            className={`rounded-[2.25rem] p-7 sm:p-12 ${
+              isLight ? 'glass-ivory' : 'glass-obsidian'
+            }`}
+          >
             <div className="grid items-center gap-8 lg:grid-cols-12">
               <div className="lg:col-span-7">
-                <span className="font-mono text-[11px] font-semibold tracking-[0.2em] text-gold-300 uppercase">
+                <span
+                  className={`font-mono text-[11px] font-semibold tracking-[0.2em] uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-300'
+                  }`}
+                >
                   Institutional &amp; Operational Counterparties
                 </span>
-                <h2 className="mt-3 font-serif text-3xl font-semibold text-ivory-50 sm:text-4xl">
-                  Connect With the <span className="text-gold-metallic italic">Corporate Desk</span>
+                <h2
+                  className={`mt-3 font-serif text-3xl font-semibold sm:text-4xl ${
+                    isLight ? 'text-obsidian-950' : 'text-ivory-50'
+                  }`}
+                >
+                  Connect With the{' '}
+                  <span
+                    className={
+                      isLight ? 'text-gold-metallic-light italic' : 'text-gold-metallic italic'
+                    }
+                  >
+                    Corporate Desk
+                  </span>
                 </h2>
-                <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ivory-200/80">
+                <p
+                  className={`mt-3 max-w-xl text-[15px] leading-relaxed ${
+                    isLight ? 'text-obsidian-800/85' : 'text-ivory-200/80'
+                  }`}
+                >
                   For utility-scale solar engineering partnerships in Pakistan, institutional
                   co-investment mandates, or digital portfolio inquiries, reach our UAE corporate
                   desk directly.
@@ -71,16 +102,20 @@ export const CorporateDeskFooter: React.FC<Props> = ({
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-gold-400/35 bg-obsidian-900 px-6 py-4 font-mono text-[12px] text-gold-200 transition-colors hover:border-gold-300"
+                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-4 font-mono text-[12px] transition-colors ${
+                    isLight
+                      ? 'border-gold-500/40 bg-white text-obsidian-900 hover:border-gold-600'
+                      : 'border-gold-400/35 bg-obsidian-900 text-gold-200 hover:border-gold-300'
+                  }`}
                 >
                   {copied ? (
                     <>
-                      <Check className="h-4 w-4 text-gold-300" />
+                      <Check className={`h-4 w-4 ${isLight ? 'text-gold-700' : 'text-gold-300'}`} />
                       <span>Copied Desk Email</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="h-4 w-4 text-gold-300" />
+                      <Copy className={`h-4 w-4 ${isLight ? 'text-gold-700' : 'text-gold-300'}`} />
                       <span>contact@imanglobal.com</span>
                     </>
                   )}
@@ -90,33 +125,61 @@ export const CorporateDeskFooter: React.FC<Props> = ({
           </div>
 
           {/* Exact Official Holding Footer */}
-          <div className="mt-14 flex flex-col justify-between gap-8 border-t border-gold-400/15 pt-10 md:flex-row md:items-center">
+          <div
+            className={`mt-14 flex flex-col justify-between gap-8 border-t pt-10 md:flex-row md:items-center ${
+              isLight ? 'border-gold-500/25' : 'border-gold-400/15'
+            }`}
+          >
             <div className="flex items-start gap-4">
-              <SovereignCrest className="h-11 w-11 shrink-0" />
+              <SovereignCrest isLight={isLight} className="h-11 w-11 shrink-0" />
               <div>
-                <p className="font-serif text-xl font-semibold tracking-[0.14em] text-ivory-50 uppercase">
+                <p
+                  className={`font-serif text-xl font-semibold tracking-[0.14em] uppercase ${
+                    isLight ? 'text-obsidian-950' : 'text-ivory-50'
+                  }`}
+                >
                   Iman Global Holding
                 </p>
-                <p className="mt-1 text-[13.5px] text-ivory-200/75">
+                <p
+                  className={`mt-1 text-[13.5px] ${
+                    isLight ? 'text-obsidian-800/80' : 'text-ivory-200/75'
+                  }`}
+                >
                   Registered Free Zone Authority | United Arab Emirates
                 </p>
-                <p className="mt-0.5 font-mono text-[11.5px] tracking-wider text-gold-300">
+                <p
+                  className={`mt-0.5 font-mono text-[11.5px] tracking-wider ${
+                    isLight ? 'text-gold-700' : 'text-gold-300'
+                  }`}
+                >
                   Shariah Governance: AAOIFI Aligned
                 </p>
               </div>
             </div>
 
             <div className="text-left md:text-right">
-              <p className="font-mono text-[12px] tracking-wider text-gold-200 uppercase">
+              <p
+                className={`font-mono text-[12px] tracking-wider uppercase ${
+                  isLight ? 'text-obsidian-900' : 'text-gold-200'
+                }`}
+              >
                 Corporate Desk:{' '}
                 <a
                   href="mailto:contact@imanglobal.com"
-                  className="underline decoration-gold-400/50 underline-offset-4 hover:text-ivory-50"
+                  className={`underline underline-offset-4 ${
+                    isLight
+                      ? 'decoration-gold-600/50 hover:text-gold-700'
+                      : 'decoration-gold-400/50 hover:text-ivory-50'
+                  }`}
                 >
                   contact@imanglobal.com
                 </a>
               </p>
-              <p className="mt-2 text-[13px] text-ivory-200/60">
+              <p
+                className={`mt-2 text-[13px] ${
+                  isLight ? 'text-obsidian-700/70' : 'text-ivory-200/60'
+                }`}
+              >
                 © 2026 Iman Global. All Rights Reserved.
               </p>
             </div>
@@ -126,14 +189,26 @@ export const CorporateDeskFooter: React.FC<Props> = ({
 
       {/* Corporate Desk Modal */}
       {deskOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md">
-          <div className="w-full max-w-lg rounded-[2rem] glass-obsidian p-6 sm:p-8">
-            <div className="flex items-center justify-between border-b border-gold-400/20 pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-md">
+          <div
+            className={`w-full max-w-lg rounded-[2rem] p-6 sm:p-8 ${
+              isLight ? 'glass-ivory text-obsidian-950' : 'glass-obsidian text-ivory-50'
+            }`}
+          >
+            <div
+              className={`flex items-center justify-between border-b pb-4 ${
+                isLight ? 'border-gold-500/25' : 'border-gold-400/20'
+              }`}
+            >
               <div>
-                <span className="font-mono text-[10.5px] tracking-[0.2em] text-gold-300 uppercase">
+                <span
+                  className={`font-mono text-[10.5px] tracking-[0.2em] uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-300'
+                  }`}
+                >
                   Iman Global Holding · UAE
                 </span>
-                <h3 className="mt-0.5 font-serif text-2xl font-semibold text-ivory-50">
+                <h3 className="mt-0.5 font-serif text-2xl font-semibold">
                   Corporate Desk Dispatch
                 </h3>
               </div>
@@ -141,7 +216,11 @@ export const CorporateDeskFooter: React.FC<Props> = ({
                 type="button"
                 onClick={onCloseDesk}
                 aria-label="Close modal"
-                className="rounded-full border border-gold-400/25 p-2 text-ivory-200 hover:border-gold-300 hover:text-gold-200"
+                className={`rounded-full border p-2 ${
+                  isLight
+                    ? 'border-gold-500/30 text-obsidian-800 hover:border-gold-600'
+                    : 'border-gold-400/25 text-ivory-200 hover:border-gold-300 hover:text-gold-200'
+                }`}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -149,7 +228,11 @@ export const CorporateDeskFooter: React.FC<Props> = ({
 
             <form onSubmit={handleCompose} className="mt-5 space-y-4">
               <div>
-                <label className="block font-mono text-[11px] tracking-wider text-gold-200 uppercase">
+                <label
+                  className={`block font-mono text-[11px] tracking-wider uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-200'
+                  }`}
+                >
                   Entity / Principal Name
                 </label>
                 <input
@@ -158,18 +241,30 @@ export const CorporateDeskFooter: React.FC<Props> = ({
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                   placeholder="e.g., Meridian Solar EPC / Family Office"
-                  className="mt-1.5 w-full rounded-xl border border-gold-400/25 bg-obsidian-950/90 px-4 py-3 text-[14px] text-ivory-50 placeholder-ivory-200/35 focus:border-gold-300 focus:outline-none"
+                  className={`mt-1.5 w-full rounded-xl border px-4 py-3 text-[14px] focus:outline-none ${
+                    isLight
+                      ? 'border-gold-500/35 bg-white text-obsidian-950 placeholder-obsidian-700/40 focus:border-gold-600'
+                      : 'border-gold-400/25 bg-obsidian-950/90 text-ivory-50 placeholder-ivory-200/35 focus:border-gold-300'
+                  }`}
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-[11px] tracking-wider text-gold-200 uppercase">
+                <label
+                  className={`block font-mono text-[11px] tracking-wider uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-200'
+                  }`}
+                >
                   Mandate Desk
                 </label>
                 <select
                   value={mandateTopic}
                   onChange={(e) => setMandateTopic(e.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-gold-400/25 bg-obsidian-950/90 px-4 py-3 text-[14px] text-ivory-50 focus:border-gold-300 focus:outline-none"
+                  className={`mt-1.5 w-full rounded-xl border px-4 py-3 text-[14px] focus:outline-none ${
+                    isLight
+                      ? 'border-gold-500/35 bg-white text-obsidian-950 focus:border-gold-600'
+                      : 'border-gold-400/25 bg-obsidian-950/90 text-ivory-50 focus:border-gold-300'
+                  }`}
                 >
                   <option>Pakistan Solar &amp; Clean Energy Co-Investment</option>
                   <option>Utility-Scale EPC &amp; Technical Partnership</option>
@@ -180,7 +275,11 @@ export const CorporateDeskFooter: React.FC<Props> = ({
               </div>
 
               <div>
-                <label className="block font-mono text-[11px] tracking-wider text-gold-200 uppercase">
+                <label
+                  className={`block font-mono text-[11px] tracking-wider uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-200'
+                  }`}
+                >
                   Executive Summary
                 </label>
                 <textarea
@@ -189,7 +288,11 @@ export const CorporateDeskFooter: React.FC<Props> = ({
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Provide a brief overview of your project, capital mandate, or operational proposal..."
-                  className="mt-1.5 w-full rounded-xl border border-gold-400/25 bg-obsidian-950/90 px-4 py-3 text-[14px] text-ivory-50 placeholder-ivory-200/35 focus:border-gold-300 focus:outline-none"
+                  className={`mt-1.5 w-full rounded-xl border px-4 py-3 text-[14px] focus:outline-none ${
+                    isLight
+                      ? 'border-gold-500/35 bg-white text-obsidian-950 placeholder-obsidian-700/40 focus:border-gold-600'
+                      : 'border-gold-400/25 bg-obsidian-950/90 text-ivory-50 placeholder-ivory-200/35 focus:border-gold-300'
+                  }`}
                 />
               </div>
 

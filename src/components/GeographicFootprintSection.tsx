@@ -3,12 +3,14 @@ import { ArrowUpRight, MapPin } from 'lucide-react';
 import { GEOGRAPHIC_MANDATES, RegionId } from '../data/mandateData';
 
 interface Props {
+  isLight: boolean;
   activeRegion: RegionId;
   onSelectRegion: (id: RegionId) => void;
   onOpenDesk: () => void;
 }
 
 export const GeographicFootprintSection: React.FC<Props> = ({
+  isLight,
   activeRegion,
   onSelectRegion,
   onOpenDesk,
@@ -19,7 +21,9 @@ export const GeographicFootprintSection: React.FC<Props> = ({
   return (
     <section
       id="footprint"
-      className="border-t border-gold-500/30 bg-ivory-100 bg-ivory-grid py-20 text-obsidian-900 sm:py-28"
+      className={`border-t border-gold-500/30 bg-ivory-grid py-20 text-obsidian-900 sm:py-28 ${
+        isLight ? 'bg-ivory-50' : 'bg-ivory-100'
+      }`}
     >
       <div className="mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
@@ -50,23 +54,25 @@ export const GeographicFootprintSection: React.FC<Props> = ({
                   onClick={() => onSelectRegion(m.id)}
                   className={`w-full rounded-2xl border p-5 text-left transition-all sm:p-6 ${
                     isSelected
-                      ? 'border-obsidian-900 bg-obsidian-950 text-ivory-50 shadow-obsidian'
-                      : 'border-gold-500/30 bg-ivory-50 text-obsidian-900 hover:border-gold-600/60'
+                      ? isLight
+                        ? 'border-gold-600 bg-ivory-200/75 text-obsidian-950 shadow-ivory'
+                        : 'border-obsidian-900 bg-obsidian-950 text-ivory-50 shadow-obsidian'
+                      : 'border-gold-500/30 bg-white text-obsidian-900 hover:border-gold-600/60'
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span
                       className={`font-mono text-[11px] font-semibold tracking-[0.18em] uppercase ${
-                        isSelected ? 'text-gold-300' : 'text-gold-700'
+                        isSelected && !isLight ? 'text-gold-300' : 'text-gold-700'
                       }`}
                     >
                       {m.code} · {m.coordinatesLabel}
                     </span>
                     <span
                       className={`rounded-full px-3 py-0.5 text-[11px] font-semibold ${
-                        isSelected
+                        isSelected && !isLight
                           ? 'border border-gold-300/40 bg-obsidian-800 text-gold-200'
-                          : 'bg-ivory-200 text-obsidian-800'
+                          : 'bg-ivory-100 text-obsidian-800 border border-gold-500/25'
                       }`}
                     >
                       {m.statusTag}
@@ -78,7 +84,7 @@ export const GeographicFootprintSection: React.FC<Props> = ({
                   </h3>
                   <p
                     className={`mt-1 text-[14.5px] ${
-                      isSelected ? 'text-ivory-200/85' : 'text-obsidian-800/80'
+                      isSelected && !isLight ? 'text-ivory-200/85' : 'text-obsidian-800/80'
                     }`}
                   >
                     {m.role}
@@ -88,33 +94,78 @@ export const GeographicFootprintSection: React.FC<Props> = ({
             })}
           </div>
 
-          {/* Right Obsidian Regional Dossier Panel */}
+          {/* Right Regional Dossier Panel */}
           <div className="lg:col-span-5">
-            <div className="flex h-full flex-col justify-between rounded-[2rem] border border-gold-400/35 bg-obsidian-950 p-7 text-ivory-50 shadow-obsidian sm:p-9">
+            <div
+              className={`flex h-full flex-col justify-between rounded-[2rem] border p-7 sm:p-9 ${
+                isLight
+                  ? 'border-gold-500/40 bg-white text-obsidian-950 shadow-ivory'
+                  : 'border-gold-400/35 bg-obsidian-950 text-ivory-50 shadow-obsidian'
+              }`}
+            >
               <div>
-                <div className="flex items-center justify-between border-b border-gold-400/20 pb-4">
-                  <span className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.18em] text-gold-300 uppercase">
+                <div
+                  className={`flex items-center justify-between border-b pb-4 ${
+                    isLight ? 'border-gold-500/20' : 'border-gold-400/20'
+                  }`}
+                >
+                  <span
+                    className={`inline-flex items-center gap-2 font-mono text-[11px] font-semibold tracking-[0.18em] uppercase ${
+                      isLight ? 'text-gold-700' : 'text-gold-300'
+                    }`}
+                  >
                     <MapPin className="h-3.5 w-3.5" />
                     Regional Mandate Dossier
                   </span>
-                  <span className="font-mono text-[11px] text-ivory-200/65">
+                  <span
+                    className={`font-mono text-[11px] ${
+                      isLight ? 'text-obsidian-700/70' : 'text-ivory-200/65'
+                    }`}
+                  >
                     {selected.coordinatesLabel}
                   </span>
                 </div>
 
-                <h3 className="mt-6 font-serif text-3xl font-semibold text-ivory-50 sm:text-4xl">
+                <h3
+                  className={`mt-6 font-serif text-3xl font-semibold sm:text-4xl ${
+                    isLight ? 'text-obsidian-950' : 'text-ivory-50'
+                  }`}
+                >
                   {selected.region}
                 </h3>
-                <p className="mt-2 text-[15px] font-semibold text-gold-200">{selected.role}</p>
+                <p
+                  className={`mt-2 text-[15px] font-semibold ${
+                    isLight ? 'text-gold-700' : 'text-gold-200'
+                  }`}
+                >
+                  {selected.role}
+                </p>
 
-                <p className="mt-4 text-[15px] leading-[1.75] text-ivory-200/82">
+                <p
+                  className={`mt-4 text-[15px] leading-[1.75] ${
+                    isLight ? 'text-obsidian-800/85' : 'text-ivory-200/82'
+                  }`}
+                >
                   {selected.summary}
                 </p>
 
-                <div className="mt-6 space-y-2.5 border-t border-gold-400/15 pt-5">
+                <div
+                  className={`mt-6 space-y-2.5 border-t pt-5 ${
+                    isLight ? 'border-gold-500/20' : 'border-gold-400/15'
+                  }`}
+                >
                   {selected.focusAreas.map((fa) => (
-                    <div key={fa} className="flex items-center gap-2.5 text-[13.5px] text-ivory-100">
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold-300" />
+                    <div
+                      key={fa}
+                      className={`flex items-center gap-2.5 text-[13.5px] ${
+                        isLight ? 'text-obsidian-900' : 'text-ivory-100'
+                      }`}
+                    >
+                      <span
+                        className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                          isLight ? 'bg-gold-600' : 'bg-gold-300'
+                        }`}
+                      />
                       <span>{fa}</span>
                     </div>
                   ))}

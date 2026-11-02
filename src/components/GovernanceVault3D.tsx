@@ -47,7 +47,7 @@ function buildBeveledGoldSquare(size: number, bar: number, depth: number, mat: T
   return g;
 }
 
-export const GovernanceVault3D: React.FC = () => {
+export const GovernanceVault3D: React.FC<{ isLight?: boolean }> = ({ isLight = false }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -187,8 +187,14 @@ export const GovernanceVault3D: React.FC = () => {
         className="h-[340px] w-full sm:h-[390px]"
         aria-label="3D Brushed Gold AAOIFI Governance Sculpture"
       />
-      <div className="inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-obsidian-900/90 px-4 py-1.5 font-mono text-[11px] tracking-[0.16em] text-gold-200 uppercase">
-        <span className="h-1.5 w-1.5 rounded-full bg-gold-300" />
+      <div
+        className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 font-mono text-[11px] tracking-[0.16em] uppercase ${
+          isLight
+            ? 'border-gold-500/35 bg-ivory-100 text-gold-700'
+            : 'border-gold-400/30 bg-obsidian-900/90 text-gold-200'
+        }`}
+      >
+        <span className={`h-1.5 w-1.5 rounded-full ${isLight ? 'bg-gold-600' : 'bg-gold-300'}`} />
         <span>AAOIFI Shariah Seal · 0% Debt Leverage</span>
       </div>
     </div>

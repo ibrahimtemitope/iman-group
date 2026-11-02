@@ -1,47 +1,46 @@
-import React, { useState } from 'react';
-import { RegionId } from './data/mandateData';
-import { SovereignHeader } from './components/SovereignHeader';
+import React from 'react';
+import { AppProvider } from './context/AppContext';
+import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { InfrastructureMandateSection } from './components/InfrastructureMandateSection';
-import { DigitalPlatformsSection } from './components/DigitalPlatformsSection';
-import { GovernanceCharterSection } from './components/GovernanceCharterSection';
-import { GeographicFootprintSection } from './components/GeographicFootprintSection';
-import { CorporateDeskFooter } from './components/CorporateDeskFooter';
+import { DestinationsAndPillarsSection } from './components/DestinationsAndPillarsSection';
+import { BudgetAnalyzerSection } from './components/BudgetAnalyzerSection';
+import { NoFundsSection } from './components/NoFundsSection';
+import { ProcessAndAdviceSection } from './components/ProcessAndAdviceSection';
+import { ConsultationSection } from './components/ConsultationSection';
+import { Footer } from './components/Footer';
+import { MobileBottomDock } from './components/MobileBottomDock';
 
 export const App: React.FC = () => {
-  const [activeRegion, setActiveRegion] = useState<RegionId>('pakistan');
-  const [deskOpen, setDeskOpen] = useState(false);
-
   return (
-    <div className="min-h-screen bg-obsidian-950 text-ivory-100">
-      <SovereignHeader onOpenDesk={() => setDeskOpen(true)} />
+    <AppProvider>
+      <div className="min-h-screen bg-ivory-50 text-ink">
+        <Navbar />
 
-      <main>
-        <HeroSection
-          activeRegion={activeRegion}
-          onSelectRegion={setActiveRegion}
-          onOpenDesk={() => setDeskOpen(true)}
-        />
+        <main>
+          {/* 1. Ultra-Crisp Hero (1 short headline + 1 short subtext + Sharjah/Indonesia pills) */}
+          <HeroSection />
 
-        <InfrastructureMandateSection />
+          {/* 2. Equal 50/50 Sharjah (UAE) & Indonesia + 3 Compact Service Cards */}
+          <DestinationsAndPillarsSection />
 
-        <DigitalPlatformsSection />
+          {/* 3. Interactive #budget-analyzer (Sharjah UAE <-> Indonesia) */}
+          <BudgetAnalyzerSection />
 
-        <GovernanceCharterSection />
+          {/* 4. Dedicated Compact "Ingen opsparing endnu?" Guidance Section */}
+          <NoFundsSection />
 
-        <GeographicFootprintSection
-          activeRegion={activeRegion}
-          onSelectRegion={setActiveRegion}
-          onOpenDesk={() => setDeskOpen(true)}
-        />
-      </main>
+          {/* 5. 5 Simple Steps + 6 Tight "Gode Råd" Cards + 3 Quick FAQs */}
+          <ProcessAndAdviceSection />
 
-      <CorporateDeskFooter
-        deskOpen={deskOpen}
-        onCloseDesk={() => setDeskOpen(false)}
-        onOpenDesk={() => setDeskOpen(true)}
-      />
-    </div>
+          {/* 6. Free 30-Min Non-Binding Calendly Consultation */}
+          <ConsultationSection />
+        </main>
+
+        <Footer />
+
+        <MobileBottomDock />
+      </div>
+    </AppProvider>
   );
 };
 

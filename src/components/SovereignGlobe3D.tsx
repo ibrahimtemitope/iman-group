@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GEOGRAPHIC_MANDATES, RegionId } from '../data/mandateData';
 
 interface Props {
+  isLight?: boolean;
   activeRegion: RegionId;
   onSelectRegion: (id: RegionId) => void;
 }
@@ -71,7 +72,11 @@ function createSquareFrame(size: number, thickness: number, depth: number, mater
   return g;
 }
 
-export const SovereignGlobe3D: React.FC<Props> = ({ activeRegion, onSelectRegion }) => {
+export const SovereignGlobe3D: React.FC<Props> = ({
+  isLight = false,
+  activeRegion,
+  onSelectRegion,
+}) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const activeRegionRef = useRef<RegionId>(activeRegion);
   activeRegionRef.current = activeRegion;
@@ -422,14 +427,26 @@ export const SovereignGlobe3D: React.FC<Props> = ({ activeRegion, onSelectRegion
               onClick={() => onSelectRegion(m.id)}
               className={`rounded-xl border px-3 py-2 text-left transition-all ${
                 active
-                  ? 'border-gold-300 bg-obsidian-800/95 shadow-gold'
-                  : 'border-gold-400/20 bg-obsidian-900/70 opacity-75 hover:border-gold-400/45 hover:opacity-100'
+                  ? isLight
+                    ? 'border-obsidian-900 bg-obsidian-950 shadow-ivory'
+                    : 'border-gold-300 bg-obsidian-800/95 shadow-gold'
+                  : isLight
+                    ? 'border-gold-500/30 bg-white/95 opacity-90 hover:border-gold-600 hover:opacity-100'
+                    : 'border-gold-400/20 bg-obsidian-900/70 opacity-75 hover:border-gold-400/45 hover:opacity-100'
               }`}
             >
-              <span className="block font-mono text-[10.5px] font-semibold tracking-wider text-gold-300">
+              <span
+                className={`block font-mono text-[10.5px] font-semibold tracking-wider ${
+                  active ? 'text-gold-300' : isLight ? 'text-gold-700' : 'text-gold-300'
+                }`}
+              >
                 {m.code}
               </span>
-              <span className="mt-0.5 block truncate text-[12px] font-medium text-ivory-100">
+              <span
+                className={`mt-0.5 block truncate text-[12px] font-medium ${
+                  active ? 'text-ivory-100' : isLight ? 'text-obsidian-900' : 'text-ivory-100'
+                }`}
+              >
                 {m.id === 'uae'
                   ? 'UAE (HQ)'
                   : m.id === 'gcc-europe'
