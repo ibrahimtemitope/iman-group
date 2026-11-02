@@ -1,126 +1,200 @@
-import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, Clock } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import React from 'react';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { GEOGRAPHIC_MANDATES, RegionId } from '../data/mandateData';
+import { SovereignGlobe3D } from './SovereignGlobe3D';
 
-export const HeroSection: React.FC = () => {
-  const { t, jumpToBudgetCorridor, scrollToBookingWithSituation } = useApp();
-  const [activeSlide, setActiveSlide] = useState(0);
+interface Props {
+  isLight: boolean;
+  activeRegion: RegionId;
+  onSelectRegion: (id: RegionId) => void;
+  onOpenDesk: () => void;
+}
 
-  const heroSlides = [
-    {
-      src: '/images/sharjah-waterfront-mosque.jpg',
-      caption: t.hero.galleryCaptions.waterfront,
-    },
-    {
-      src: '/images/sharjah-mosque-courtyard.jpg',
-      caption: t.hero.galleryCaptions.mosque,
-    },
-    {
-      src: '/images/sharjah-residence.jpg',
-      caption: t.hero.galleryCaptions.residence,
-    },
-  ];
+export const HeroSection: React.FC<Props> = ({
+  isLight,
+  activeRegion,
+  onSelectRegion,
+  onOpenDesk,
+}) => {
+  const currentMandate =
+    GEOGRAPHIC_MANDATES.find((m) => m.id === activeRegion) || GEOGRAPHIC_MANDATES[0];
 
   return (
-    <section id="top" className="bg-ivory-50 pb-12 pt-7 sm:pb-16 sm:pt-11">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Short, Sharp, Warm */}
-          <div className="lg:col-span-6">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-sage-700">
-              {t.hero.eyebrow}
-            </p>
+    <section
+      id="top"
+      className={`relative overflow-hidden pb-16 pt-8 transition-colors duration-300 sm:pb-28 sm:pt-16 ${
+        isLight
+          ? 'bg-ivory-50 bg-ivory-grid text-obsidian-950'
+          : 'bg-obsidian-950 bg-sovereign-grid text-ivory-50'
+      }`}
+    >
+      {/* Ambient Radial Gold Glow */}
+      <div
+        className="pointer-events-none absolute -top-40 right-0 h-[620px] w-[620px] rounded-full opacity-25 blur-[130px]"
+        style={{
+          background: isLight
+            ? 'radial-gradient(circle, rgba(207,166,87,0.38) 0%, rgba(252,251,248,0) 70%)'
+            : 'radial-gradient(circle, rgba(223,190,120,0.48) 0%, rgba(4,6,9,0) 70%)',
+        }}
+      />
 
-            <h1 className="heading-hero mt-3 font-medium text-navy-900">
-              {t.hero.headline}
+      <div className="relative mx-auto max-w-[1340px] px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-10">
+          {/* Left Institutional Copy (7 of 12 cols) */}
+          <div className="lg:col-span-7">
+            <div
+              className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 ${
+                isLight
+                  ? 'border-gold-500/35 bg-white shadow-sm'
+                  : 'border-gold-400/30 bg-obsidian-900/90'
+              }`}
+            >
+              <span
+                className={`font-mono text-[10.5px] font-semibold tracking-[0.2em] uppercase sm:text-[11px] ${
+                  isLight ? 'text-gold-700' : 'text-gold-300'
+                }`}
+              >
+                Iman Global · United Arab Emirates
+              </span>
+            </div>
+
+            <h1
+              className={`mt-5 font-serif text-[2.4rem] font-semibold leading-[1.06] tracking-[-0.01em] sm:mt-6 sm:text-[3.85rem] lg:text-[4.35rem] ${
+                isLight ? 'text-obsidian-950' : 'text-ivory-50'
+              }`}
+            >
+              Deploying Institutional Capital Across{' '}
+              <span className={isLight ? 'text-gold-metallic-light italic' : 'text-gold-metallic italic'}>
+                Emerging Markets &amp; Infrastructure.
+              </span>
             </h1>
 
-            <p className="body-prose mt-4 max-w-xl">
-              {t.hero.subtext}
+            <p
+              className={`mt-5 max-w-2xl text-[16px] leading-[1.75] sm:mt-6 sm:text-[18px] ${
+                isLight ? 'text-obsidian-800/85' : 'text-ivory-200/82'
+              }`}
+            >
+              Headquartered in the United Arab Emirates, Iman Global is a private investment
+              holding entity focused on real-asset infrastructure, renewable energy deployment,
+              and scalable digital enterprises across South Asia, the GCC, and high-growth
+              frontier markets.
             </p>
 
-            {/* Quick Clickable Sharjah & Indonesia Pills */}
-            <div className="mt-5 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => jumpToBudgetCorridor('sharjah')}
-                className="rounded-full border border-sage-200 bg-sage-50 px-3.5 py-1.5 text-[13px] font-semibold text-sage-800 transition-colors hover:bg-sage-100"
-              >
-                {t.hero.sharjahPill}
-              </button>
-              <button
-                type="button"
-                onClick={() => jumpToBudgetCorridor('indonesia')}
-                className="rounded-full border border-ivory-300 bg-white px-3.5 py-1.5 text-[13px] font-semibold text-navy-900 transition-colors hover:bg-ivory-100"
-              >
-                {t.hero.indonesiaPill}
-              </button>
-            </div>
-
-            {/* Dual CTAs */}
-            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
-              <button
-                type="button"
-                onClick={() => scrollToBookingWithSituation('exploring')}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-sage-700 px-6 py-3.5 text-[15px] font-semibold text-ivory-50 transition-colors hover:bg-sage-800"
-              >
-                <span>{t.hero.primaryCta}</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-
+            <div className="mt-8 flex flex-col gap-3.5 sm:mt-9 sm:flex-row sm:items-center">
               <a
-                href="#budget-analyzer"
-                className="inline-flex items-center justify-center rounded-full border border-ivory-300 bg-white px-6 py-3.5 text-[15px] font-semibold text-navy-900 transition-colors hover:border-ivory-400 hover:bg-ivory-100"
+                href="#infrastructure"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full border border-gold-200/60 bg-gradient-to-b from-gold-100 via-gold-300 to-gold-500 px-8 py-4 text-[13.5px] font-bold tracking-[0.12em] text-obsidian-950 uppercase shadow-gold transition-all hover:brightness-110"
               >
-                {t.hero.secondaryCta}
+                <span>Explore Mandates</span>
+                <ArrowDownRight className="h-4 w-4" />
               </a>
+
+              <button
+                type="button"
+                onClick={onOpenDesk}
+                className={`inline-flex items-center justify-center gap-2.5 rounded-full border px-7 py-4 text-[13.5px] font-semibold tracking-[0.1em] uppercase transition-all ${
+                  isLight
+                    ? 'border-gold-500/40 bg-white text-obsidian-900 hover:border-gold-600 hover:bg-ivory-100'
+                    : 'border-gold-400/35 bg-obsidian-900/80 text-gold-100 hover:border-gold-300 hover:bg-obsidian-800'
+                }`}
+              >
+                <span>Corporate Desk</span>
+                <ArrowUpRight className={`h-4 w-4 ${isLight ? 'text-gold-700' : 'text-gold-300'}`} />
+              </button>
             </div>
 
-            {/* Free 30-Min Call Badge */}
-            <p className="mt-3.5 inline-flex items-center gap-2 text-[14px] font-medium text-sage-800">
-              <Clock className="h-4 w-4 shrink-0 text-sage-700" />
-              <span>{t.hero.freeMeetingNote}</span>
-            </p>
-          </div>
-
-          {/* Right Column: Clean Visual Frame */}
-          <div className="lg:col-span-6">
-            <div className="rounded-[1.6rem] border border-ivory-300/90 bg-white p-2.5 shadow-warm sm:p-3">
-              <div className="overflow-hidden rounded-[1.25rem] bg-ivory-100">
-                <img
-                  src={heroSlides[activeSlide].src}
-                  alt={heroSlides[activeSlide].caption}
-                  className="aspect-[16/10.5] w-full object-cover"
-                />
+            {/* Active 3D Corridor Readout Bar */}
+            <div
+              className={`mt-9 rounded-2xl p-4 sm:mt-10 sm:p-5 ${
+                isLight ? 'glass-ivory' : 'glass-obsidian'
+              }`}
+            >
+              <div
+                className={`flex flex-wrap items-center justify-between gap-2 border-b pb-3 ${
+                  isLight ? 'border-gold-500/20' : 'border-gold-400/15'
+                }`}
+              >
+                <span
+                  className={`font-mono text-[11px] font-semibold tracking-[0.18em] uppercase ${
+                    isLight ? 'text-gold-700' : 'text-gold-300'
+                  }`}
+                >
+                  Active Corridor // {currentMandate.region}
+                </span>
+                <span
+                  className={`font-mono text-[11px] ${
+                    isLight ? 'text-obsidian-700/70' : 'text-ivory-200/65'
+                  }`}
+                >
+                  {currentMandate.coordinatesLabel}
+                </span>
               </div>
-
-              <div className="mt-2.5 grid grid-cols-3 gap-2">
-                {heroSlides.map((slide, idx) => (
-                  <button
-                    key={slide.src}
-                    type="button"
-                    onClick={() => setActiveSlide(idx)}
-                    className={`overflow-hidden rounded-xl border transition-all ${
-                      idx === activeSlide
-                        ? 'border-sage-700 ring-2 ring-sage-700/20'
-                        : 'border-ivory-300 opacity-75 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={slide.src}
-                      alt={slide.caption}
-                      className="aspect-[16/9] w-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-2.5 flex items-center gap-2.5 rounded-xl bg-ivory-50 px-3.5 py-2.5 text-[13.5px] font-medium text-navy-900">
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-sage-700" />
-                <span>{t.hero.localAgentsLine}</span>
-              </div>
+              <p
+                className={`mt-3 text-[14px] leading-relaxed ${
+                  isLight ? 'text-obsidian-900/90' : 'text-ivory-100/90'
+                }`}
+              >
+                <strong className={`font-semibold ${isLight ? 'text-gold-700' : 'text-gold-200'}`}>
+                  {currentMandate.role}:
+                </strong>{' '}
+                {currentMandate.summary}
+              </p>
             </div>
           </div>
+
+          {/* Right Live 3D Obsidian Globe + 24K Gold Rub el Hizb Gyroscope (5 of 12 cols) */}
+          <div className="lg:col-span-5">
+            <SovereignGlobe3D
+              isLight={isLight}
+              activeRegion={activeRegion}
+              onSelectRegion={onSelectRegion}
+            />
+          </div>
+        </div>
+
+        {/* Institutional Structural Pillars Strip */}
+        <div
+          className={`mt-14 grid grid-cols-2 gap-3.5 border-t pt-9 sm:mt-16 sm:gap-4 sm:pt-10 lg:grid-cols-4 ${
+            isLight ? 'border-gold-500/25' : 'border-gold-400/20'
+          }`}
+        >
+          {[
+            { label: 'Domicile & HQ', value: 'United Arab Emirates', sub: 'Registered Free Zone Authority' },
+            { label: 'Primary Energy Focus', value: 'Pakistan Solar PV', sub: 'Utility-Scale Clean Infrastructure' },
+            { label: 'Shariah Framework', value: 'AAOIFI Aligned', sub: 'Strict Islamic Finance Governance' },
+            { label: 'Capital Structure', value: '0% Debt Leverage', sub: '100% Asset-Backed Equity' },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className={`rounded-2xl border px-4 py-4 sm:px-5 ${
+                isLight
+                  ? 'border-gold-500/25 bg-white shadow-ivory'
+                  : 'border-gold-400/15 bg-obsidian-900/55'
+              }`}
+            >
+              <span
+                className={`font-mono text-[10px] tracking-[0.15em] uppercase sm:text-[10.5px] ${
+                  isLight ? 'text-gold-700' : 'text-gold-300/80'
+                }`}
+              >
+                {stat.label}
+              </span>
+              <p
+                className={`mt-1.5 font-serif text-xl font-semibold sm:text-[1.65rem] ${
+                  isLight ? 'text-obsidian-950' : 'text-ivory-50'
+                }`}
+              >
+                {stat.value}
+              </p>
+              <p
+                className={`mt-0.5 text-[12px] sm:text-[12.5px] ${
+                  isLight ? 'text-obsidian-700/75' : 'text-ivory-200/65'
+                }`}
+              >
+                {stat.sub}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

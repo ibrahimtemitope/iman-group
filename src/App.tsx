@@ -1,46 +1,76 @@
-import React from 'react';
-import { AppProvider } from './context/AppContext';
-import { Navbar } from './components/Navbar';
+import React, { useEffect, useState } from 'react';
+import { RegionId } from './data/mandateData';
+import { SovereignHeader } from './components/SovereignHeader';
 import { HeroSection } from './components/HeroSection';
-import { DestinationsAndPillarsSection } from './components/DestinationsAndPillarsSection';
-import { BudgetAnalyzerSection } from './components/BudgetAnalyzerSection';
-import { NoFundsSection } from './components/NoFundsSection';
-import { ProcessAndAdviceSection } from './components/ProcessAndAdviceSection';
-import { ConsultationSection } from './components/ConsultationSection';
-import { Footer } from './components/Footer';
-import { MobileBottomDock } from './components/MobileBottomDock';
+import { InfrastructureMandateSection } from './components/InfrastructureMandateSection';
+import { DigitalPlatformsSection } from './components/DigitalPlatformsSection';
+import { GovernanceCharterSection } from './components/GovernanceCharterSection';
+import { GeographicFootprintSection } from './components/GeographicFootprintSection';
+import { CorporateDeskFooter } from './components/CorporateDeskFooter';
 
 export const App: React.FC = () => {
+  const [activeRegion, setActiveRegion] = useState<RegionId>('pakistan');
+  const [deskOpen, setDeskOpen] = useState(false);
+  const [isLight, setIsLight] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('iman-global-theme') === 'light';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isLight) {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    try {
+      window.localStorage.setItem('iman-global-theme', isLight ? 'light' : 'dark');
+    } catch {
+      // Ignore storage errors
+    }
+  }, [isLight]);
+
   return (
-    <AppProvider>
-      <div className="min-h-screen bg-ivory-50 text-ink">
-        <Navbar />
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        isLight ? 'bg-ivory-50 text-obsidian-950' : 'bg-obsidian-950 text-ivory-100'
+      }`}
+    >
+      <SovereignHeader
+        isLight={isLight}
+        onToggleTheme={() => setIsLight((prev) => !prev)}
+        onOpenDesk={() => setDeskOpen(true)}
+      />
 
-        <main>
-          {/* 1. Ultra-Crisp Hero (1 short headline + 1 short subtext + Sharjah/Indonesia pills) */}
-          <HeroSection />
+      <main>
+        <HeroSection
+          isLight={isLight}
+          activeRegion={activeRegion}
+          onSelectRegion={setActiveRegion}
+          onOpenDesk={() => setDeskOpen(true)}
+        />
 
-          {/* 2. Equal 50/50 Sharjah (UAE) & Indonesia + 3 Compact Service Cards */}
-          <DestinationsAndPillarsSection />
+        <InfrastructureMandateSection isLight={isLight} />
 
-          {/* 3. Interactive #budget-analyzer (Sharjah UAE <-> Indonesia) */}
-          <BudgetAnalyzerSection />
+        <DigitalPlatformsSection isLight={isLight} />
 
-          {/* 4. Dedicated Compact "Ingen opsparing endnu?" Guidance Section */}
-          <NoFundsSection />
+        <GovernanceCharterSection isLight={isLight} />
 
-          {/* 5. 5 Simple Steps + 6 Tight "Gode Råd" Cards + 3 Quick FAQs */}
-          <ProcessAndAdviceSection />
+        <GeographicFootprintSection
+          isLight={isLight}
+          activeRegion={activeRegion}
+          onSelectRegion={setActiveRegion}
+          onOpenDesk={() => setDeskOpen(true)}
+        />
+      </main>
 
-          {/* 6. Free 30-Min Non-Binding Calendly Consultation */}
-          <ConsultationSection />
-        </main>
-
-        <Footer />
-
-        <MobileBottomDock />
-      </div>
-    </AppProvider>
+      <CorporateDeskFooter
+        isLight={isLight}
+        deskOpen={deskOpen}
+        onCloseDesk={() => setDeskOpen(false)}
+        onOpenDesk={() => setDeskOpen(true)}
+      />
+    </div>
   );
 };
 
